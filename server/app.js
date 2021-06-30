@@ -1,8 +1,11 @@
 // ANCHOR Sequelize - server
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
+// NOTE Usando o cors para requisições externas e definindo que o express aceite json para requests e responses
 app.use(express.json());
+app.use(cors());
 
 const db = require('./models')
 
