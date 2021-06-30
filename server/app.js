@@ -2,8 +2,13 @@
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
 const db = require('./models')
 
+// NOTE Rotas do projeto
+const postRouter = require('./routes/Posts')
+app.use("/posts", postRouter);
 
 
 // NOTE Definindo que o sequelize ira checar todos as tabelas do banco com os da pasta 'models', quando iniciar a API, caso a tabela não existe ele irá criar com o método sync

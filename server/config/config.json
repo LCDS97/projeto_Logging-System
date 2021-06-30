@@ -1,9 +1,9 @@
 
 {
   "development": {
-    "username": "userStudy",
+    "username": "root",
     "password": "root",
-    "database": "tutorialdb",
+    "database": "logging-system",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
