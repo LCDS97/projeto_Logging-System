@@ -1,31 +1,22 @@
 // ANCHOR Requisições do front-end
 import "./App.css";
-//NOTE Importando axios para fazer requisições
-import axios from "axios";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import Home from "./pages/Home"
+import CreatePost from "./pages/CreatePost"
 
-import { useEffect, useState } from "react";
 
 function App() {
-  const [listOfPosts, setListofPosts] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/posts").then((response) => {
-      setListofPosts(response.data);
-    });
-  }, []);
-  return (
-    <div className="App">
-      {listOfPosts.map((value, key) => {
-        return (
-          <div className="post">
-            <div className="title">{value.title} </div>
-            <div className="body">{value.postText} </div>
-            <div className="footer">{value.username} </div>
-          </div>
-        )
-      })}
+    return <div className="App">
+      <Router>
+        <Link to="/createpost"> Cria um Post</Link>
+        <Link to="/"> Home Page</Link>
+        <Switch>
+          <Route path="/" exact component={ Home } />
+          <Route path="/createpost" exact component={ CreatePost } />
+        </Switch>
+      </Router>
     </div>
-  );
+ 
 }
 
 export default App;
