@@ -6,7 +6,8 @@ import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 
 function App() {
-    return <div className="App">
+    return ( 
+    <div className="App">
       <Router>
         <div className="navbar">
         <Link to="/"> Home Page</Link>
@@ -19,6 +20,7 @@ function App() {
         </Switch>
       </Router>
     </div>
+    );
  
 }
 

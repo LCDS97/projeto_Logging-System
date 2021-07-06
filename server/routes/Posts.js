@@ -3,7 +3,7 @@
 // SECTION Using módulo Router do express para definir rotas
 const express = require('express');
 // NOTE Importando o router
-const router = express.Router()
+const router = express.Router();
 
 const { Posts } = require('../models');
 
@@ -33,4 +33,4 @@ router.post("/", async (req, res) => {
 
 })
 
-module.exports = router
+module.exports = router;
