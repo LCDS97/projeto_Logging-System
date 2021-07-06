@@ -12,6 +12,13 @@ router.get("/", async (req, res) => {
     // NOTE Listando valores do banco para a home, utilizando a query do findAll do sequelize do model Posts
     const listOfPosts = await Posts.findAll();
     res.json(listOfPosts);
+});
+
+
+router.get("/byId/:id", async (req, res) => {
+    const id = req.params.id;
+    const post = await Posts.findByPk(id);
+    res.json(post);
 })
 
 
