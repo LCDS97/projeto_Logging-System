@@ -12,6 +12,8 @@ const db = require('./models')
 // NOTE Rotas do projeto
 const postRouter = require('./routes/Posts')
 app.use("/posts", postRouter);
+const commentsRouter = require('./routes/Comments')
+app.use("/comments", commentsRouter);
 
 
 // NOTE Definindo que o sequelize ira checar todos as tabelas do banco com os da pasta 'models', quando iniciar a API, caso a tabela não existe ele irá criar com o método sync
