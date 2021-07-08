@@ -7,13 +7,16 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 
-const db = require("./models")
+const db = require("./models");
 
 // NOTE Rotas do projeto
-const postRouter = require("./routes/Posts")
+const postRouter = require("./routes/Posts");
+const commentsRouter = require("./routes/Comments");
+const usersRouter = require("./routes/Users");
+
 app.use("/posts", postRouter);
-const commentsRouter = require("./routes/Comments")
 app.use("/comments", commentsRouter);
+app.use("/auth", usersRouter);
 
 
 // NOTE Definindo que o sequelize ira checar todos as tabelas do banco com os da pasta 'models', quando iniciar a API, caso a tabela não existe ele irá criar com o método sync
