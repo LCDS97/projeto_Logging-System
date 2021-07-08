@@ -1,38 +1,42 @@
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcrypt');
 
-const { Users } = require('../models');
+const bcrypt = require("bcrypt");
+const { sign } = require("jsonwebtoken");
+
+const { Users } = require("../models");
 
 router.post("/", async (req, res) => {
-    const { username, password } = req.body;
-    bcrypt.hash(password, 10).then((hash) => {
-        Users.create({
-            username,
-            password: hash,
-        })
-        res.json("Success!")
+  const { username, password } = req.body;
+  bcrypt.hash(password, 10).then((hash) => {
+    Users.create({
+      username,
+      password: hash,
     });
+    res.json("Success!");
+  });
 });
 
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-    const user = await Users.findOne({ where: { username: username } });
+  const user = await Users.findOne({ where: { username: username } });
 
-    if(!user) {
-        res.json({error: "User doesn't exist"})
+  if (!user) {
+    res.json({ error: "User doesn't exist" });
+  }
+
+  bcrypt.compare(password, user.password).then((match) => {
+    if (!match) {
+      res.json({ error: "Wrong Username and Password Combination" });
     }
 
-    bcrypt.compare(password, user.password).then((match) => {
-        if (!match) {
-            res.json({error: "Wrong Username and Password Combination"});
-        }
-
-    res.json("Você esta logado!")
-    })
-
-})
+    const accessToken = sign(
+      { username: user.username, id: user.id },
+      "importantSecret"
+    );
+    res.json(accessToken);
+  });
+});
 
 module.exports = router;
