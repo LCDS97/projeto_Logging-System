@@ -13,7 +13,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="loginContainer">
       <input
         type="text"
         onChange={(event) => {
