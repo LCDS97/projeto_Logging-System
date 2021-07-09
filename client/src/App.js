@@ -14,8 +14,12 @@ function App() {
         <div className="navbar">
         <Link to="/"> Home Page</Link>
         <Link to="/createpost"> Cria um Post</Link>
+        {!localStorage.getItem('accessToken') && (
+        <>
         <Link to="/login"> Login</Link>
         <Link to="/registration"> Registre-se</Link>
+        </>
+        )} 
         </div>
         <Switch>
           <Route path="/" exact component={Home} />
