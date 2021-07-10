@@ -13,10 +13,12 @@ const db = require("./models");
 const postRouter = require("./routes/Posts");
 const commentsRouter = require("./routes/Comments");
 const usersRouter = require("./routes/Users");
+const likesRouter = require("./routes/Likes");
 
 app.use("/posts", postRouter);
 app.use("/comments", commentsRouter);
 app.use("/auth", usersRouter);
+app.use("/likes", likesRouter);
 
 
 // NOTE Definindo que o sequelize ira checar todos as tabelas do banco com os da pasta 'models', quando iniciar a API, caso a tabela não existe ele irá criar com o método sync
