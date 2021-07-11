@@ -3,7 +3,6 @@ const router = express.Router();
 const { Likes } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
-
 router.post("/", validateToken, async (req, res) => {
   const { PostId } = req.body;
   const UserId = req.user.id;
@@ -13,10 +12,10 @@ router.post("/", validateToken, async (req, res) => {
   });
   if (!found) {
     await Likes.create({ PostId: PostId, UserId: UserId });
-    res.json( { liked: true });
+    res.json({ liked: true });
   } else {
-    await Likes.destroy({ where: { PostId: PostId, UserId: UserId } });
-    res.json( { liked: false });
+    await Likes.destroy({ where: { PostId: PostId, UserId: UserId }, });
+    res.json({ liked: false });
   }
 });
 
