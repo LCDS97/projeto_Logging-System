@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import PageNotFound from "./pages/PageNotFound";
 import Profile from "./pages/Profile";
+import ChangePassword from "./pages/ChangePassword";
 
 
 import { AuthContext } from "./helpers/AuthContext";
@@ -86,6 +87,7 @@ function App() {
             <Route path="/registration" exact component={Registration} />
             <Route path="/login" exact component={Login} />
             <Route path="/profile/:id" exact component={Profile} />
+            <Route path="/changepassword" exact component={ChangePassword} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
         </Router>

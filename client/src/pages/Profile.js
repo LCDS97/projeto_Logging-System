@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
-
+import { AuthContext } from "../helpers/AuthContext";
 
 function Profile() {
   let { id } = useParams();
@@ -10,6 +10,8 @@ function Profile() {
   const [username, setUsername] = useState("");
   const [listOfPosts, setListOfPosts] = useState([]);
 
+  const { authState } = useContext(AuthContext);
+
   useEffect(() => {
     axios
       .get(`http://localhost:3001/users/basicinfo/${id}`)
@@ -17,9 +19,7 @@ function Profile() {
         setUsername(response.data.username);
       });
 
-    axios
-    .get(`http://localhost:3001/posts/byuserId/${id}`)
-    .then((response) => {
+    axios.get(`http://localhost:3001/posts/byuserId/${id}`).then((response) => {
       setListOfPosts(response.data);
     });
   }, []);
@@ -28,6 +28,15 @@ function Profile() {
       <div className="basicInfo">
         {" "}
         <h1>Username: {username} </h1>
+        {authState.username === username && (
+          <button
+            onClick={() => {
+              history.push("/changepassword");
+            }}
+          >
+            Mudar minha senha
+          </button>
+        )}
       </div>
       <div className="listOfPosts">
         {listOfPosts.map((value, key) => {
