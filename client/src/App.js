@@ -27,20 +27,20 @@ function App() {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState({...authState, status: false});
+          setAuthState({ ...authState, status: false });
         } else {
           setAuthState({
             username: response.data.username,
             id: response.data.id,
             status: true,
-          })
+          });
         }
       });
   }, []);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    setAuthState({username: "", id: 0, status: false});
+    setAuthState({ username: "", id: 0, status: false });
   };
 
   return (
@@ -49,29 +49,25 @@ function App() {
         <Router>
           <div className="navbar">
             <div className="links">
-            <Link to="/"> Home Page</Link>
-
-            {!authState.status ? (
-              <>
-                <div className="links">
-                <Link to="/login"> Login</Link>
-                <Link to="/registration"> Registre-se</Link>
-                </div>
-              </>
-              
-            ) : (
-              <>
-
-              <Link to="/createpost"> Cria um Post</Link>
-              <div className="loggedInContainer">
-              <h2>{authState.username}</h2>
-              <button onClick={logout}> Logout </button>
-              </div>
-              </>
-            )}
-                        </div>
+              {!authState.status ? (
+                <>
+                  <div className="links">
+                    <Link to="/login"> Login</Link>
+                    <Link to="/registration"> Registre-se</Link>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link to="/"> Home Page</Link>
+                  <Link to="/createpost"> Cria um Post</Link>
+                  <div className="loggedInContainer">
+                    <h2>{authState.username}</h2>
+                    <button onClick={logout}> Logout </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-
 
           <Switch>
             <Route path="/" exact component={Home} />

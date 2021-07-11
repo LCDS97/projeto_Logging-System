@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
+
+
 
 function CreatePost() {
-  
+
+  const { authState } = useContext(AuthContext);
     let history = useHistory();
 
     const initialValues = {
@@ -13,6 +17,12 @@ function CreatePost() {
         postText: "",
         username: "",
     };
+
+    useEffect(() => {
+      if(!authState.status){
+        history.push("/login");
+      }
+    }, [])
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Sem titúlo é complicado, necessita colocar um titúlo"),
