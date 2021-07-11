@@ -1,9 +1,10 @@
 import React from "react";
-//NOTE Importando axios para fazer requisições
 import axios from "axios";
 
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
@@ -26,7 +27,7 @@ function Home() {
         setListOfPosts(
           listOfPosts.map((post) => {
             if (post.id === postId) {
-              if (response.config.liked) {
+              if (response.data.liked) {
                 return { ...post, Likes: [...post.Likes, 0] };
               } else {
                 const likesArray = post.Likes;
@@ -53,17 +54,16 @@ function Home() {
                 history.push(`/post/${value.id}`);
               }}
             >
-              {value.postText}{" "}
+              {value.postText}
             </div>
             <div className="footer">
               {value.username}
-              <button
+
+              <ThumbUpAltIcon
                 onClick={() => {
                   likeAPost(value.id);
                 }}
-              >
-                Like
-              </button>
+              />
               <label>{value.Likes.length}</label>
             </div>
           </div>
