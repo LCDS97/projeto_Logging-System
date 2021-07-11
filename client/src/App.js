@@ -1,15 +1,20 @@
 // ANCHOR Requisições do front-end
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { useHistory, BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import PageNotFound from "./pages/PageNotFound";
+import Profile from "./pages/Profile";
+
+
 import { AuthContext } from "./helpers/AuthContext";
-import { useState, useEffect } from "react";
-import axios from "axios";
+
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -18,10 +23,12 @@ function App() {
     status: false,
   });
 
+  let history = useHistory();
+
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/checkAuth", {
+      .get("http://localhost:3001/users/checkAuth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -42,8 +49,9 @@ function App() {
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ username: "", id: 0, status: false });
-    
+    window.location.pathname = "/login"
   };
+
 
   return (
     <div className="App">
@@ -77,6 +85,7 @@ function App() {
             <Route path="/post/:id" exact component={Post} />
             <Route path="/registration" exact component={Registration} />
             <Route path="/login" exact component={Login} />
+            <Route path="/profile/:id" exact component={Profile} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
         </Router>

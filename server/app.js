@@ -17,7 +17,7 @@ const likesRouter = require("./routes/Likes");
 
 app.use("/posts", postRouter);
 app.use("/comments", commentsRouter);
-app.use("/auth", usersRouter);
+app.use("/users", usersRouter);
 app.use("/likes", likesRouter);
 
 
