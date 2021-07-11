@@ -8,12 +8,22 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/posts").then((response) => {
-      setListOfPosts(response.data);
-    });
+    axios
+      .get("http://localhost:3001/posts", {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        setListOfPosts(response.data.listOfPosts);
+        setLikedPosts(
+          response.data.likedPosts.map((like) => {
+            return like.PostId;
+          })
+        );
+      });
   }, []);
 
   const likeAPost = (postId) => {
@@ -39,6 +49,15 @@ function Home() {
             }
           })
         );
+        if (likedPosts.includes(postId)) {
+          setLikedPosts(
+            likedPosts.filter((id) => {
+              return id !== postId;
+            })
+          );
+        } else {
+          setLikedPosts([...likedPosts, postId]);
+        }
       });
   };
 
@@ -57,14 +76,19 @@ function Home() {
               {value.postText}
             </div>
             <div className="footer">
-              {value.username}
+              <div className="username">{value.username}</div>
 
-              <ThumbUpAltIcon
-                onClick={() => {
-                  likeAPost(value.id);
-                }}
-              />
-              <label>{value.Likes.length}</label>
+              <div className="buttons">
+                <ThumbUpAltIcon
+                  onClick={() => {
+                    likeAPost(value.id);
+                  }}
+                  className={
+                    likedPosts.includes(value.id) ? "unlikeBttn" : "likeBttn"
+                  }
+                />
+                <label>{value.Likes.length}</label>
+              </div>
             </div>
           </div>
         );
