@@ -18,6 +18,7 @@ function App() {
     status: false,
   });
 
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/auth/checkAuth", {
@@ -41,6 +42,7 @@ function App() {
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ username: "", id: 0, status: false });
+    
   };
 
   return (

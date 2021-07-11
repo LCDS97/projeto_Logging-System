@@ -5,42 +5,47 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 
-
-
 function CreatePost() {
-
   const { authState } = useContext(AuthContext);
-    let history = useHistory();
+  let history = useHistory();
 
-    const initialValues = {
-        title: "",
-        postText: "",
-        username: "",
-    };
+  const initialValues = {
+    title: "",
+    postText: "",
+  };
 
-    useEffect(() => {
-      if(!authState.status){
-        history.push("/login");
-      }
-    }, [])
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      history.push("/login");
+    }
+  }, []);
 
-    const validationSchema = Yup.object().shape({
-        title: Yup.string().required("Sem titúlo é complicado, necessita colocar um titúlo"),
-        postText: Yup.string().required("OOPPAA, é necessário o corpo da postagem!"),
-        username: Yup.string().min(3).max(15,"Seu nome de usuário tem que ter no máximo 15 caracteres").required("Seu nome de usuário é necessário ser maior que 3 caracteres")
-    });
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required(
+      "Sem titúlo é complicado, necessita colocar um titúlo"
+    ),
+    postText: Yup.string().required(
+      "OOPPAA, é necessário o corpo da postagem!"
+    ),
+  });
 
-    const onSubmit = (data) => {
-        axios.post("http://localhost:3001/posts", data).then((response) => {
-            history.push("/")
-          });
-    };
-
-
+  const onSubmit = (data) => {
+    axios
+      .post("http://localhost:3001/posts", data, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        history.push("/");
+      });
+  };
 
   return (
     <div className="createPostPage">
-      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
         <Form className="formContainer">
           <label>Titulo</label>
           <ErrorMessage name="title" component="span" />
@@ -50,18 +55,11 @@ function CreatePost() {
             placeholder="(Ex. Título...)"
           />
           <label>Post: </label>
-          <ErrorMessage name="postText" component="span" />          
+          <ErrorMessage name="postText" component="span" />
           <Field
             id="inputCreatePost"
             name="postText"
             placeholder="(Ex. Postagem...)"
-          />
-          <label>Username: </label>
-          <ErrorMessage name="username" component="span" />          
-          <Field
-            id="inputCreatePost"
-            name="username"
-            placeholder="(Ex. Usuário...)"
           />
 
           <button type="submit">Criar Postagem</button>
