@@ -16,11 +16,11 @@ router.get("/byId/:id", async (req, res) => {
     res.json(post);
 });
 
-/* router.get("/byuserId/:id", async (req, res) => {
+router.get("/byuserId/:id", async (req, res) => {
     const id = req.params.id;
-    const listOfPost = await Posts.findAll({where: {}});
-    res.json(post);
-}); */
+    const listOfPost = await Posts.findAll({where: {UserId: id}});
+    res.json(listOfPost);
+});
 
 
 router.post("/", validateToken, async (req, res) => {
