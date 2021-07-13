@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/users/checkAuth", {
+      .get("https://full-stack-api-lcds97.herokuapp.com/users/checkAuth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },

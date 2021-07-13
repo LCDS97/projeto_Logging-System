@@ -15,7 +15,7 @@ function Registration() {
   });
 
   const onSubmit = (data) => {
-      axios.post("http://localhost:3001/users", data).then(() => {
+      axios.post("https://full-stack-api-lcds97.herokuapp.com/users", data).then(() => {
           console.log(data);
       })
   };

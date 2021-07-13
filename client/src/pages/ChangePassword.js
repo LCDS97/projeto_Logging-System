@@ -7,7 +7,7 @@ function ChangePassword() {
 
   const changePassword = () => {
     axios.put(
-      "http://localhost:3001/users/changepassword",
+      "https://full-stack-api-lcds97.herokuapp.com/users/changepassword",
       { oldPassword: oldPassword, newPassword: newPassword },
       {
         headers: { accessToken: localStorage.getItem("accessToken") },

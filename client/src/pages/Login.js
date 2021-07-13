@@ -12,7 +12,7 @@ function Login() {
 
   const login = () => {
     const data = { username: username, password: password };
-    axios.post("http://localhost:3001/users/login", data).then((response) => {
+    axios.post("https://full-stack-api-lcds97.herokuapp.com/users/login", data).then((response) => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
